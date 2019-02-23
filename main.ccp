@@ -4,14 +4,6 @@
 
 using namespace std;
 
-// Суть игры в том , что кидаются 3 кубика: 1 определяет тип атаки 
-//(При выподаниии 1, 3, 5 физическая атака - и маг. защита , при 2, 4, 6 обратная ситуация - маг. атака и физ защита),
-//2 кубик физическая атака/защита  (выпавшее число определяет силу элемента),
-//3 кубик магическая атака/защита (выпавшее число определяет силу элемента)
-//Ходят игроки по ичереди проигрывает тот у кого первым опустится показатель жизней до "0"
-//При выпадении одинкаовых значений на 2 и 3 кубике делается повторный бросок до тех пор пока не выпадут разные значения,
-//а все выброшенные числа складываются в силу элемента
-
 void End() {
 	exit(1);
 }	
@@ -105,7 +97,7 @@ void Walks(int *P1Rand1, int *P1Rand2) {
 }
 
 void PlayerVsPlayer(string *NamePlayer_1, string *NamePlayer_2, int *HP1, int *HP2) {
-	while (*HP1 > 0 || *HP2 > 0) {
+	while (*HP1 > 0 && *HP2 > 0) {
 		int goes;
 		string Pl1, Pl2, TipAttack1, TipAttack2;
 		int P1Rand1, P1Rand2, P2Rand1, P2Rand2;
@@ -136,7 +128,7 @@ void PlayerVsPlayer(string *NamePlayer_1, string *NamePlayer_2, int *HP1, int *H
 		cout << "Your tip attack: " << TipAttack2 << endl;
 		cout << "player " << Pl2 << " walks (2 cube): ";
 		P2Rand1 = rand() % 6 + 1; P2Rand2 = rand() % 6 + 1;
-		if (P2Rand1 == P2Rand2) { cout << endl << endl << " Walks!!! " << P2Rand1 << " : " << P2Rand2 << endl << endl; Walks(&P1Rand1, &P1Rand2); cout << endl << endl << " Walks!!! " << P2Rand1 << " : " << P2Rand2 << endl << endl;
+		if (P2Rand1 == P2Rand2) { cout << endl << endl << " Walks!!! " << P2Rand1 << " : " << P2Rand2 << endl << endl; Walks(&P2Rand1, &P2Rand2); cout << endl << endl << " Walks!!! " << P2Rand1 << " : " << P2Rand2 << endl << endl;
 		}
 		if (TipAttack2 == "Physical ") { cout << "Attack with force: " << P2Rand1 << endl << "Protection: " << P2Rand2 << endl; }
 		else { cout << "Attack with force: " << P2Rand2 << endl << "Protection: " << P2Rand1 << endl; }
@@ -153,7 +145,7 @@ int main(int argc, char* argv[]) {
 	setlocale(LC_ALL, "Russian");
 	int HP = 30, players = 0, HP1, HP2;
 	string NamePlayer_1 = "P1", NamePlayer_2 = "P2";
-	setting(&players, &HP, &NamePlayer_1, &NamePlayer_2);               // Настрока                   //cout << HP << endl << NamePlayer_1 << endl << NamePlayer_2 ;
+	setting(&players, &HP, &NamePlayer_1, &NamePlayer_2);               // Настрока
 	HP1 = HP, HP2 = HP;
 	PlayerVsPlayer(&NamePlayer_1, &NamePlayer_2, &HP1, &HP2);
 	if (HP1 <= 0 && HP2 <= 0) { cout << "Huchia "; }
@@ -162,5 +154,5 @@ int main(int argc, char* argv[]) {
 	system("pause");
 	return 0;
 
-	//Исправить баг с даблом
 }
+
